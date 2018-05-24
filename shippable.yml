@@ -37,7 +37,7 @@ jobs:
                 - gce_zone: "us-east1-d"
                 - gce_machine_type: "n1-standard-1"
                 - gce_image: "ubuntu-1604-xenial-v20180522"
-                - gce_tag_Role: "demo_machines"
+                - gce_tag_Role: "demo-machines"
                 - gce_count: 1
                 - gce_volume_size: 30
                 - GCE_PROJECT: "devops-recipes"
