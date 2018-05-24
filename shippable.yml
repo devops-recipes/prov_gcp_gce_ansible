@@ -36,7 +36,7 @@ jobs:
                 - STATE_RES_NAME: "gcp_gce_info"
                 - gce_zone: "us-east1-d"
                 - gce_machine_type: "n1-standard-1"
-                - gce_image: "ubuntu-1604-lts"
+                - gce_image: "ubuntu-1604-xenial-v20180522"
                 - gce_tag_Role: "demo_machines"
                 - gce_count: 1
                 - gce_volume_size: 30
