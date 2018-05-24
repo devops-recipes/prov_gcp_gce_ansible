@@ -17,9 +17,9 @@
         tags: "{{ gce_tag_Role }}"
         num_instances: "{{ gce_count }}"
         disk_size: "{{ gce_volume_size }}"
-        service_account_email: "{{ gce_service_account_email }}"
-        credentials_file: "{{ SERVICE_ACCOUNT_JSON }}"
-        project_id: "{{ gce_project_id }}"
+        service_account_email: "{{ GCE_EMAIL }}"
+        credentials_file: "{{ GCE_CREDENTIALS_FILE_PATH }}"
+        project_id: "{{ GCE_PROJECT }}"
       register: gce
 
     - debug:
