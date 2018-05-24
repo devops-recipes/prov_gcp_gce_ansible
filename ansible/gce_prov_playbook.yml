@@ -1,5 +1,5 @@
 ---
-### provision GCP GCE instance
+### provision GCP GCE instances
 - hosts: localhost
   connection: local
   gather_facts: false
@@ -22,34 +22,24 @@
         project_id: "{{ GCE_PROJECT }}"
       register: gce
 
-    - debug:
-        var: gce
-        verbosity: 2
+    - name: Save host data
+      add_host:
+        hostname: "{{ item.public_ip }}"
+        groupname: gce_instances_ips
+      with_items: "{{ gce.instance_data }}"
 
-#
-#    - name: Save host data
-#      add_host:
-#        hostname: "{{ item.public_ip }}"
-#        groupname: gce_instances_ips
-#      with_items: "{{ gce.instance_data }}"
-#
-#    - name: Wait for SSH for instances
-#      wait_for:
-#        delay: 1
-#        host: "{{ item.public_ip }}"
-#        port: 22
-#        state: started
-#        timeout: 30
-#      with_items: "{{ gce.instance_data }}"
-#
-#    # update shippable resource state
-#    - name: run cmd
-#      shell: |
-#        shipctl put_resource_state "{{ STATE_RES_NAME }}" "INST_{{ item.ami_launch_index }}_PUBLIC_IP" "{{ item.public_ip }}"
-#        shipctl put_resource_state "{{ STATE_RES_NAME }}" "INST_{{ item.ami_launch_index }}_ID" "{{ item.id }}"
-#        shipctl put_resource_state_multi "{{ STATE_RES_NAME }}" "ec2_tag_Type={{ ec2_tag_Type }}" "ec2_tag_Role={{ ec2_tag_Role }}" "ec2_region={{ ec2_region }}"
-#      with_items: "{{ ec2.instances }}"
-#
-#  post_tasks:
-#    - name: refresh hosts inventory list
-#      meta: refresh_inventory
+    - name: Wait for SSH for instances
+      wait_for:
+        delay: 1
+        host: "{{ item.public_ip }}"
+        port: 22
+        state: started
+        timeout: 30
+      with_items: "{{ gce.instance_data }}"
+
+    # update shippable resource state
+    - name: run cmd
+      shell: |
+        shipctl put_resource_state_multi "{{ STATE_RES_NAME }}" "INST_{{ item.0 }}_PUBLIC_IP={{ item.1.public_ip }}" "gce_tag_Role={{ gce_tag_Role }}"
+      with_indexed_items: "{{ gce.instance_data }}"
+
