@@ -34,7 +34,7 @@ jobs:
             options:
               env:
                 - STATE_RES_NAME: "gcp_gce_info"
-                - gce_zone: "us-east1-b"
+                - gce_zone: "us-east1-d"
                 - gce_machine_type: "n1-standard-1"
                 - gce_image: "ami-43a15f3e"
                 - gce_tag_Role: "demo_machines"
