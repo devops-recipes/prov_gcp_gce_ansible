@@ -23,8 +23,8 @@
       register: gce
 
     - debug:
-      var: gce
-      verbosity: 2
+        var: gce
+        verbosity: 2
 
 #
 #    - name: Save host data
