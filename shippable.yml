@@ -1,0 +1,80 @@
+resources:
+# Automation scripts repo
+  - name: gcp_gce_repo
+    type: gitRepo
+    integration: "drship_github"
+    versionTemplate:
+      sourceName: "devops-recipes/prov_gcp_gce_ansible"
+      branch: master
+
+# AWS credentials
+  - name: gcp_gce_creds
+    type: integration
+    integration: "drship_gcp"
+
+# Output of EC2 provisioning
+  - name: gcp_gce_info
+    type: params
+    versionTemplate:
+      params:
+        SEED: "initial_version"
+
+jobs:
+# Provision AWS EC2 with Ansible
+  - name: prov_gcp_gce_ans
+    type: runSh
+    steps:
+      - IN: gcp_gce_repo
+        switch: off
+      - IN: gcp_gce_creds
+        switch: off
+      - TASK:
+          name: prov_ec2
+          runtime:
+            options:
+              env:
+                - STATE_RES_NAME: "gcp_gce_info"
+                - gce_zone: "us-east1-b"
+                - gce_machine_type: "n1-standard-1"
+                - gce_image: "ami-43a15f3e"
+                - gce_tag_Role: "demo_machines"
+                - gce_count: 1
+                - gce_volume_size: 30
+                - gce_project_id: "devops-recipes"
+                - gce_service_account_email: "dr-gke@devops-recipes.iam.gserviceaccount.com"
+                - SERVICE_ACCOUNT_JSON: "gcp_key.json"
+          script:
+            - pip install apache-libcloud
+            - pushd $(shipctl get_resource_state "gcp_gce_repo")/ansible
+            - echo $(shipctl get_integration_resource_field gcp_gce_creds JSON_key) > $SERVICE_ACCOUNT_JSON)
+            - shipctl replace variables.yml
+            - ansible-playbook -v gce_prov_playbook.yml
+      - OUT: gcp_gce_info
+        overwrite: true
+    flags:
+      - gcp_gce
+      - gce
+      - ansible
+#
+## Terminate AWS EC2 with Ansible
+#  - name: term_gcp_gce_ans
+#    type: runSh
+#    steps:
+#      - IN: gcp_gce_repo
+#      - IN: gcp_gce_creds
+#        switch: off
+#      - IN: gcp_gce_info
+#        switch: off
+#      - TASK:
+#          name: term_ec2
+#          script:
+#            - pushd $(shipctl get_resource_state "gcp_gce_repo")/ansible
+#            - export ec2_region="us-east-1"
+#            - export AWS_ACCESS_KEY_ID=$(shipctl get_integration_resource_field gcp_gce_creds "accessKey")
+#            - export AWS_SECRET_ACCESS_KEY=$(shipctl get_integration_resource_field gcp_gce_creds "secretKey")
+#            - shipctl replace variables.yml
+#            - ansible-playbook -v gce_term_playbook.yml
+#    flags:
+#      - gcp_gce
+#      - gce
+#      - ansible

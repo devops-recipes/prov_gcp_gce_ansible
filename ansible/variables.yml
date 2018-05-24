@@ -1,0 +1,9 @@
+STATE_RES_NAME: "${STATE_RES_NAME}"
+gce_zone: "${gce_zone}"
+gce_machine_type: "${gce_machine_type}"
+gce_image: "${gce_image}"
+gce_tag_Role: "${gce_tag_Role}"
+gce_volume_size: ${gce_volume_size}
+gce_count: ${gce_count}
+gce_service_account_email: "${gce_service_account_email}"
+SERVICE_ACCOUNT_JSON: "${SERVICE_ACCOUNT_JSON}"
