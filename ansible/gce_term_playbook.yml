@@ -15,6 +15,7 @@
         project_id: "{{ GCE_PROJECT }}"
         tags: "{{ gce_tag_Role }}"
         zone: "{{ gce_zone }}"
+        instance_names: "{{ gce_name }}"
         state: absent
       tags:
         - delete

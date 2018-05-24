@@ -1,4 +1,5 @@
 STATE_RES_NAME: "${STATE_RES_NAME}"
+gce_name: "${gce_name}"
 gce_zone: "${gce_zone}"
 gce_machine_type: "${gce_machine_type}"
 gce_image: "${gce_image}"

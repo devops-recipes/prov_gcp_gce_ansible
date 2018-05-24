@@ -34,6 +34,7 @@ jobs:
             options:
               env:
                 - STATE_RES_NAME: "gcp_gce_info"
+                - gce_name: "dev"
                 - gce_zone: "us-east1-d"
                 - gce_machine_type: "n1-standard-1"
                 - gce_image: "ubuntu-1604-xenial-v20180522"
@@ -71,6 +72,7 @@ jobs:
             options:
               env:
                 - gce_zone: "us-east1-d"
+                - gce_name: "dev"
                 - gce_tag_Role: "demo-machines"
                 - GCE_PROJECT: "devops-recipes"
                 - GCE_EMAIL: "dr-gke@devops-recipes.iam.gserviceaccount.com"

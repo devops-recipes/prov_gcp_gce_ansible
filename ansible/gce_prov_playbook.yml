@@ -40,6 +40,6 @@
     # update shippable resource state
     - name: run cmd
       shell: |
-        shipctl put_resource_state_multi "{{ STATE_RES_NAME }}" "INST_{{ item.0 }}_PUBLIC_IP={{ item.1.public_ip }}" "gce_tag_Role={{ gce_tag_Role }}"
+        shipctl put_resource_state_multi "{{ STATE_RES_NAME }}" "INST_{{ item.0 }}_PUBLIC_IP={{ item.1.public_ip }}" "gce_tag_Role={{ gce_tag_Role }}" "gce_name={{ gce_name }}"
       with_indexed_items: "{{ gce.instance_data }}"
 
