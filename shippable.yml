@@ -62,6 +62,7 @@ jobs:
     type: runSh
     steps:
       - IN: gcp_gce_repo
+        switch: off
       - IN: gcp_gce_creds
         switch: off
       - IN: gcp_gce_info
