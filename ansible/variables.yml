@@ -7,3 +7,4 @@ gce_volume_size: ${gce_volume_size}
 gce_count: ${gce_count}
 gce_service_account_email: "${gce_service_account_email}"
 SERVICE_ACCOUNT_JSON: "${SERVICE_ACCOUNT_JSON}"
+gce_project_id: "${gce_project_id}"
