@@ -48,6 +48,7 @@ jobs:
             - pushd $(shipctl get_resource_state "gcp_gce_repo")/ansible
             - echo $(shipctl get_integration_resource_field gcp_gce_creds JSON_key) > $GCE_CREDENTIALS_FILE_PATH
             - shipctl replace variables.yml inventory/gce.ini
+            - ./inventory/gce.py --list
             - ansible-playbook -v gce_prov_playbook.yml
       - OUT: gcp_gce_info
         overwrite: true
