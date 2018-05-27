@@ -12,7 +12,7 @@ resources:
     type: integration
     integration: "drship_gcp"
 
-# Output of EC2 provisioning
+# Output of GCP provisioning
   - name: gcp_gce_info
     type: params
     versionTemplate:
@@ -20,7 +20,7 @@ resources:
         SEED: "initial_version"
 
 jobs:
-# Provision AWS EC2 with Ansible
+# Provision GCP GCE with Ansible
   - name: prov_gcp_gce_ans
     type: runSh
     steps:
